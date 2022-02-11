@@ -1,3 +1,6 @@
 {
-  "PORT": 8080
+  "PORT": 8080,
+  "UPLOADS_DIR_NAME": ".storage",
+  "STORAGE_FILE_NAME": "storage",
+  "INDEX_FILE_NAME": "index"
 }

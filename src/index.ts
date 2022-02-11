@@ -1,6 +1,7 @@
 import { createServer } from 'http';
 import { UPLOADS_DIR_NAME, PORT } from '../config.json';
 import { createOne } from './dbms/createOne';
+import { getOne } from './dbms/getOne';
 import { mkdirIfNotExists } from './fs';
 
 const server = createServer(async (req, res) => {
@@ -12,7 +13,12 @@ const server = createServer(async (req, res) => {
     if (url?.[1] === 'db') {
       switch (req.method) {
         case 'GET': {
-          break;
+          const id = +url[2]; // TODO: handle case when there is no id at all
+          if (Number.isInteger(id)) {
+            const value = await getOne(id);
+            return res.end(JSON.stringify({ statusCode: 200, value }));
+          }
+          throw Error('Unvalid param');
         }
         case 'POST': {
           const buffers = [];
